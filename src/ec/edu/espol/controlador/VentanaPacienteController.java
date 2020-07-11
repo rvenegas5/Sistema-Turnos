@@ -92,7 +92,8 @@ public class VentanaPacienteController implements Initializable {
                 Sintoma next = lIt.next();
                 if (next.getNombre().equals(sintoma)) {
                     sintomaP = next;
-                } else {
+                    break;
+                } else if (lIt.hasNext() == false) {
                     sintomaP = new Sintoma(sintoma, 5);
                 }
             }
