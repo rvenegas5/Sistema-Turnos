@@ -23,6 +23,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
 
 /**
@@ -54,7 +55,9 @@ public class VentanaPacienteController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        ToggleGroup tg = new ToggleGroup();
+        this.generoMasc.setToggleGroup(tg);
+        this.generoFem.setToggleGroup(tg);
     }
 
     @FXML
