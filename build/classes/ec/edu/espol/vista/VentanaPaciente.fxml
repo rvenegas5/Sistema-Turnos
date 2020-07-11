@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="404.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ec.edu.espol.controlador.VentanaPacienteController">
+   <children>
+      <Button fx:id="botonRegPaciente" layoutX="125.0" layoutY="313.0" mnemonicParsing="false" onAction="#registrarPaciente" text="REGISTRAR" />
+      <TextField fx:id="nombrePaciente" layoutX="163.0" layoutY="45.0" />
+      <TextField fx:id="apellidoPaciente" layoutX="163.0" layoutY="95.0" />
+      <Label layoutX="92.0" layoutY="49.0" text="Nombre" />
+      <Label layoutX="92.0" layoutY="99.0" text="Apellido" />
+      <Label layoutX="101.0" layoutY="149.0" text="Edad" />
+      <TextField fx:id="edadPaciente" layoutX="163.0" layoutY="145.0" />
+      <Label layoutX="95.0" layoutY="199.0" text="Género" />
+      <Label layoutX="93.0" layoutY="247.0" text="Síntoma" />
+      <TextField fx:id="sintomaPaciente" layoutX="163.0" layoutY="243.0" />
+      <Button fx:id="botonCancelarRegPac" layoutX="238.0" layoutY="313.0" mnemonicParsing="false" onAction="#cancelarRegistroPac" text="CANCELAR" />
+      <RadioButton fx:id="generoMasc" layoutX="158.0" layoutY="199.0" mnemonicParsing="false" text="Masculino" />
+      <RadioButton fx:id="generoFem" layoutX="251.0" layoutY="199.0" mnemonicParsing="false" text="Femenino" />
+   </children>
+</AnchorPane>

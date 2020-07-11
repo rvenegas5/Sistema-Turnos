@@ -1,0 +1,8 @@
+vómito|1
+fiebre|0
+resfrio|3
+congestión nasal|3
+dolor de cabeza|5
+escalofrios|1
+dolor de garganta|4
+dolor en las articulaciones|2

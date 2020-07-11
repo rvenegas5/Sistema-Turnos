@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="ec.edu.espol.controlador.VentanaPrincipalController">
+   <children>
+      <Button fx:id="botonAbrirST" layoutX="132.0" layoutY="279.0" mnemonicParsing="false" onAction="#abrirSistemaTurnos" prefHeight="25.0" prefWidth="133.0" text="Abrir Sistema Turnos" />
+      <Button fx:id="botonSalir" layoutX="356.0" layoutY="279.0" mnemonicParsing="false" onAction="#salirVentanaPrincipal" prefHeight="25.0" prefWidth="117.0" text="Salir" />
+      <Button fx:id="botonRegistrarPasc" layoutX="140.0" layoutY="200.0" mnemonicParsing="false" onAction="#registrarPasciente" prefHeight="25.0" prefWidth="117.0" text="Registrar Pasciente" />
+      <Button fx:id="botonRegistrarDoc" layoutX="356.0" layoutY="200.0" mnemonicParsing="false" onAction="#registrarDoctor" prefHeight="25.0" prefWidth="117.0" text="Registrar Doctor" />
+   </children>
+</AnchorPane>
