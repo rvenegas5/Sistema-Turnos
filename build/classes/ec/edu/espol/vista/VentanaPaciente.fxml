@@ -1,25 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="404.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ec.edu.espol.controlador.VentanaPacienteController">
+<AnchorPane id="AnchorPane" prefHeight="429.0" prefWidth="429.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ec.edu.espol.controlador.VentanaPacienteController">
    <children>
-      <Button fx:id="botonRegPaciente" layoutX="125.0" layoutY="313.0" mnemonicParsing="false" onAction="#registrarPaciente" text="REGISTRAR" />
-      <TextField fx:id="nombrePaciente" layoutX="163.0" layoutY="45.0" />
-      <TextField fx:id="apellidoPaciente" layoutX="163.0" layoutY="95.0" />
-      <Label layoutX="92.0" layoutY="49.0" text="Nombre" />
-      <Label layoutX="92.0" layoutY="99.0" text="Apellido" />
-      <Label layoutX="101.0" layoutY="149.0" text="Edad" />
-      <TextField fx:id="edadPaciente" layoutX="163.0" layoutY="145.0" />
-      <Label layoutX="95.0" layoutY="199.0" text="Género" />
-      <Label layoutX="93.0" layoutY="247.0" text="Síntoma" />
-      <TextField fx:id="sintomaPaciente" layoutX="163.0" layoutY="243.0" />
-      <Button fx:id="botonCancelarRegPac" layoutX="238.0" layoutY="313.0" mnemonicParsing="false" onAction="#cancelarRegistroPac" text="CANCELAR" />
-      <RadioButton fx:id="generoMasc" layoutX="158.0" layoutY="199.0" mnemonicParsing="false" text="Masculino" />
-      <RadioButton fx:id="generoFem" layoutX="251.0" layoutY="199.0" mnemonicParsing="false" text="Femenino" />
+      <Button fx:id="botonRegPaciente" layoutX="125.0" layoutY="345.0" mnemonicParsing="false" onAction="#registrarPaciente" text="REGISTRAR" />
+      <TextField fx:id="nombrePaciente" layoutX="165.0" layoutY="89.0" />
+      <TextField fx:id="apellidoPaciente" layoutX="163.0" layoutY="140.0" />
+      <Label layoutX="93.0" layoutY="93.0" text="Nombre" />
+      <Label layoutX="93.0" layoutY="144.0" text="Apellido" />
+      <Label layoutX="101.0" layoutY="190.0" text="Edad" />
+      <TextField fx:id="edadPaciente" layoutX="163.0" layoutY="186.0" />
+      <Label layoutX="95.0" layoutY="235.0" text="Género" />
+      <Label layoutX="93.0" layoutY="286.0" text="Síntoma" />
+      <TextField fx:id="sintomaPaciente" layoutX="164.0" layoutY="282.0" />
+      <Button fx:id="botonCancelarRegPac" layoutX="238.0" layoutY="345.0" mnemonicParsing="false" onAction="#cancelarRegistroPac" text="CANCELAR" />
+      <RadioButton fx:id="generoMasc" layoutX="164.0" layoutY="235.0" mnemonicParsing="false" text="Masculino" />
+      <RadioButton fx:id="generoFem" layoutX="251.0" layoutY="235.0" mnemonicParsing="false" text="Femenino" />
+      <Label layoutX="142.0" layoutY="34.0" text="REGISTO DE PACIENTE">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>
