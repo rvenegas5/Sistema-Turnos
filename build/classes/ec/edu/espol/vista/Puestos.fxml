@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="315.0" prefWidth="540.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ComboBox fx:id="medicoBox" layoutX="216.0" layoutY="113.0" opacity="0.63" prefHeight="35.0" prefWidth="184.0" promptText="Por favor, elija un médico" />
+      <Label layoutX="123.0" layoutY="115.0" prefHeight="32.0" prefWidth="79.0" text="Medico">
+         <font>
+            <Font size="22.0" />
+         </font>
+      </Label>
+      <Button layoutX="231.0" layoutY="184.0" mnemonicParsing="false" onAction="#asignarPuestos" prefHeight="25.0" prefWidth="115.0" text="CREAR PUESTO" />
+      <Button layoutX="231.0" layoutY="217.0" mnemonicParsing="false" text="ELIMINAR PUESTO" />
+      <Label layoutX="177.0" layoutY="28.0" text="Puesto de Atención">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Button fx:id="salir" layoutX="231.0" layoutY="254.0" mnemonicParsing="false" onAction="#salirPag" prefHeight="25.0" prefWidth="115.0" text="SALIR" />
+   </children>
+</AnchorPane>

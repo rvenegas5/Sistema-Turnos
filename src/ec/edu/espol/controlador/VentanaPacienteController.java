@@ -87,7 +87,8 @@ public class VentanaPacienteController implements Initializable {
             Sintoma sintomaP = null;
             LinkedList<Sintoma> listaSintoma = Sintoma.leerSintomas("sintomas.txt");
             ListIterator<Sintoma> lIt = listaSintoma.listIterator();
-
+            
+            // Válidacion del sintoma
             while (lIt.hasNext()) {
                 Sintoma next = lIt.next();
                 if (next.getNombre().equals(sintoma)) {
@@ -104,6 +105,19 @@ public class VentanaPacienteController implements Initializable {
             escribir.flush();
             escribir.close();
             bw.close();
+            
+            // Muestro mensaje de registro
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setHeaderText(null);
+            alert.setTitle("ÉXITO");
+            alert.setContentText("REGISTRO EXITOSO");
+            alert.showAndWait();
+            
+            // Restablece el registro
+            nombrePaciente.setText("");
+            apellidoPaciente.setText("");
+            edadPaciente.setText("");
+            sintomaPaciente.setText("");
 
         } catch (IOException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);

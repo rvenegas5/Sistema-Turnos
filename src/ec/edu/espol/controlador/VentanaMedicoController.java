@@ -36,7 +36,7 @@ import javafx.stage.Stage;
  */
 public class VentanaMedicoController implements Initializable {
 
-     @FXML
+    @FXML
     private Button registrar;
     @FXML
     private TextField nombreMedico;
@@ -47,35 +47,30 @@ public class VentanaMedicoController implements Initializable {
     @FXML
     private TextField especialidadMedico;
     @FXML
-    private Button cancelar;
-    @FXML
     private RadioButton generoM;
     @FXML
     private RadioButton generoF;
+    @FXML
+    private Button botoncancelarDoc;
 
-   private ArrayList<Medico> medicos = new ArrayList<>();
-    
-    
-    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         ToggleGroup tg = new ToggleGroup();
         this.generoM.setToggleGroup(tg);
         this.generoF.setToggleGroup(tg);
-    }    
-    
-     @FXML
-    private void registrarMedico(ActionEvent event) {
+    }
 
+    @FXML
+    private void registrarDoc(ActionEvent event) {
         try {
             File file = new File("medicos.txt");
             BufferedWriter bw;
             bw = new BufferedWriter(new FileWriter(file, true));
             PrintWriter escribir = new PrintWriter(bw);
 
-            String nombreP = this.nombreMedico.getText();
-            String apellidoP = this.apellidoMedico.getText();
-            int edadP = Integer.parseInt(this.edadMedico.getText());
+            String nombreDoc = this.nombreMedico.getText();
+            String apellidoDoc = this.apellidoMedico.getText();
+            int edadDoc = Integer.parseInt(this.edadMedico.getText());
             char genero;
 
             // Válido la selección del género y lo establezo
@@ -88,15 +83,26 @@ public class VentanaMedicoController implements Initializable {
             }
 
             String especialidad = especialidadMedico.getText();
-            
 
-            Medico medico = new Medico(nombreP, apellidoP, edadP, genero, especialidad);
-            medicos.add(medico);
+            Medico medico = new Medico(nombreDoc, apellidoDoc, edadDoc, genero, especialidad);
             escribir.println(medico.toString());
 
             escribir.flush();
             escribir.close();
             bw.close();
+            
+            // Muestro mensaje de registro
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setHeaderText(null);
+            alert.setTitle("ÉXITO");
+            alert.setContentText("REGISTRO EXITOSO");
+            alert.showAndWait();
+            
+            // Restablece los valores de registro
+            nombreMedico.setText("");
+            apellidoMedico.setText("");
+            edadMedico.setText("");
+            especialidadMedico.setText("");
 
         } catch (IOException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -105,30 +111,12 @@ public class VentanaMedicoController implements Initializable {
             alert.setContentText("ERROR DE REGISTRO");
             alert.showAndWait();
         }
-
     }
 
-    public ArrayList<Medico> getMedicos() {
-        return medicos;
-    }
-
-    public void setMedicos(ArrayList<Medico> medicos) {
-        this.medicos = medicos;
-    }
-
-    
-    
-    
-    
     @FXML
-    private void cancelarRegistroPac(ActionEvent event) {
-        Stage stage = (Stage) this.cancelar.getScene().getWindow();
+    private void cancelarRegistroDoc(ActionEvent event) {
+        Stage stage = (Stage) this.botoncancelarDoc.getScene().getWindow();
         stage.close();
     }
-    
-    
-    
-    
-    
-    
+
 }

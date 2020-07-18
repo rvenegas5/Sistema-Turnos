@@ -6,3 +6,4 @@ dolor de cabeza|5
 escalofrios|1
 dolor de garganta|4
 dolor en las articulaciones|2
+manchas en la piel|4
