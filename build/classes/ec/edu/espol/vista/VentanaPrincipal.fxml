@@ -33,7 +33,7 @@
             <Font size="24.0" />
          </font>
       </Button>
-      <Button fx:id="puestoAtencion" layoutX="85.0" layoutY="321.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="241.0" text="Puesto de Atención">
+      <Button fx:id="puestoAtencion" layoutX="85.0" layoutY="321.0" mnemonicParsing="false" onAction="#asignarPuestos" prefHeight="51.0" prefWidth="241.0" text="Puesto de Atención">
          <font>
             <Font size="24.0" />
          </font>

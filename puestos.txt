@@ -1,0 +1,6 @@
+Libre|1|manuel|asdas|33|M|sad
+Libre|2|pablo|velasco|44|M|otorinolaringologo
+Libre|3|emanuel|peñaloza|22|F|asdasd
+Libre|4|pablo|asdas|44|M|sodsodf
+Libre|5|eduardo|andrade|50|M|doctor
+Libre|6|asd|asdasfas|30|F|asdasda

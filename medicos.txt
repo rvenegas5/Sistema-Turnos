@@ -1,0 +1,6 @@
+manuel|asdas|33|M|sad
+pablo|velasco|44|M|otorinolaringologo
+emanuel|peñaloza|22|F|asdasd
+pablo|asdas|44|M|sodsodf
+eduardo|andrade|50|M|doctor
+asd|asdasfas|30|F|asdasda

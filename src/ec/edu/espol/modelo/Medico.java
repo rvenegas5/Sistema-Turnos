@@ -10,8 +10,12 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.LinkedList;
+import java.util.List;
+import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 /**
  *
@@ -43,9 +47,17 @@ public class Medico extends Persona {
         return getNombre() + "|" + getApellido() + "|" + getEdad() + "|"
                 + getGenero() + "|" + getEspecialidad();
     }
-   
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        return hash;
+    }
+
     
-    public static LinkedList<Medico> leerDoctores(String archivo){
+    
+    
+    public static LinkedList<Medico> getMedicos(String archivo){
         LinkedList<Medico> listaDoctores = new LinkedList<>();
         
         try {
@@ -71,4 +83,23 @@ public class Medico extends Persona {
         }
         return listaDoctores;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Medico other = (Medico) obj;
+        if (!Objects.equals(this.especialidad, other.especialidad)) {
+            return false;
+        }
+        return true;
+    }
+    
 }

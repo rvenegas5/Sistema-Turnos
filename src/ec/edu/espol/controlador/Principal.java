@@ -1,10 +1,6 @@
 package ec.edu.espol.controlador;
 
-import ec.edu.espol.modelo.Sintoma;
 import java.io.IOException;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.ListIterator;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
