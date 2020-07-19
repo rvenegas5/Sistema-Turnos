@@ -6,8 +6,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="434.0" prefWidth="707.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="ec.edu.espol.controlador.VentanaPuestosController">
+<AnchorPane id="AnchorPane" prefHeight="434.0" prefWidth="707.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ec.edu.espol.controlador.VentanaPuestosController">
    <children>
       <ComboBox fx:id="comboBoxMedicos" layoutX="457.0" layoutY="99.0" prefHeight="25.0" prefWidth="230.0" promptText="-eliga a un médico" />
       <TableView fx:id="tablaPuesto" layoutX="14.0" layoutY="14.0" prefHeight="367.0" prefWidth="415.0">
@@ -18,7 +17,9 @@
         </columns>
       </TableView>
       <Label contentDisplay="CENTER" layoutX="490.0" layoutY="69.0" prefHeight="25.0" prefWidth="148.0" text="SELECCIONE A UN MEDICO" textAlignment="CENTER" />
-      <Button fx:id="botonAñadirPuesto" layoutX="444.0" layoutY="185.0" mnemonicParsing="false" onAction="#añadirPuesto" prefHeight="25.0" prefWidth="112.0" text="Añadir" />
+      <Button fx:id="botonAñadirPuesto" layoutX="444.0" layoutY="185.0" mnemonicParsing="false" onAction="#añadirPuesto" prefHeight="25.0" prefWidth="112.0" text="Añadir Puesto" />
       <Button fx:id="botonSalir" layoutX="572.0" layoutY="185.0" mnemonicParsing="false" onAction="#salirPuestos" prefHeight="25.0" prefWidth="119.0" text="Salir" />
+      <Button fx:id="botonEliminarPuesto" layoutX="444.0" layoutY="248.0" mnemonicParsing="false" onAction="#eliminarPuesto" prefHeight="25.0" prefWidth="112.0" text="Eliminar Puesto" />
+      <Button fx:id="botonAtenderPuesto" layoutX="576.0" layoutY="248.0" mnemonicParsing="false" onAction="#atenderPuesto" prefHeight="25.0" prefWidth="112.0" text="Atender Puesto" />
    </children>
 </AnchorPane>

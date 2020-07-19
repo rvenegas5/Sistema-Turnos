@@ -7,6 +7,7 @@ package ec.edu.espol.controlador;
 
 import ec.edu.espol.modelo.Paciente;
 import ec.edu.espol.modelo.Sintoma;
+import ec.edu.espol.modelo.Turno;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -49,6 +50,8 @@ public class VentanaPacienteController implements Initializable {
     private RadioButton generoMasc;
     @FXML
     private RadioButton generoFem;
+    
+    public LinkedList<Turno> turnos = new LinkedList<>();
 
     /**
      * Initializes the controller class.
@@ -106,6 +109,8 @@ public class VentanaPacienteController implements Initializable {
             escribir.close();
             bw.close();
             
+            
+            
             // Muestro mensaje de registro
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setHeaderText(null);
@@ -133,6 +138,30 @@ public class VentanaPacienteController implements Initializable {
     private void cancelarRegistroPac(ActionEvent event) {
         Stage stage = (Stage) this.botonCancelarRegPac.getScene().getWindow();
         stage.close();
+    }
+    
+    private void guardarTurno(Turno turno) {
+        try {
+            File file = new File("turnos.txt");
+            BufferedWriter bw;
+            bw = new BufferedWriter(new FileWriter(file, true));
+            PrintWriter escribir = new PrintWriter(bw);
+            
+            escribir.println(turno.toString());
+
+            escribir.flush();
+            escribir.close();
+            bw.close();
+            
+        } catch(IOException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setTitle("ERROR");
+            alert.setContentText("ERROR DE REGISTRO");
+            alert.showAndWait();
+        }
+
+    
     }
 
 }

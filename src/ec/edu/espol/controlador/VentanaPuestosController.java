@@ -7,6 +7,7 @@ package ec.edu.espol.controlador;
 
 import ec.edu.espol.modelo.Medico;
 import ec.edu.espol.modelo.Puesto;
+import java.awt.event.MouseEvent;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -14,6 +15,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URL;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -49,6 +51,10 @@ public class VentanaPuestosController implements Initializable {
     private Button botonAñadirPuesto;
     @FXML
     private Button botonSalir;
+    @FXML
+    private Button botonEliminarPuesto;
+    @FXML
+    private Button botonAtenderPuesto;
 
     private ObservableList<Puesto> puestos;
 
@@ -102,25 +108,32 @@ public class VentanaPuestosController implements Initializable {
     private void añadirPuesto(ActionEvent event) {
 
         try {
+            if (!this.comboBoxMedicos.getItems().isEmpty()) {
+                File file = new File("puestos.txt");
+                BufferedWriter bw;
+                bw = new BufferedWriter(new FileWriter(file, true));
+                PrintWriter escribir = new PrintWriter(bw);
 
-            File file = new File("puestos.txt");
-            BufferedWriter bw;
-            bw = new BufferedWriter(new FileWriter(file, true));
-            PrintWriter escribir = new PrintWriter(bw);
+                Medico doc = comboBoxMedicos.getValue();
+                int numeroPuesto = getNumPuesto(numPuesto);
 
-            Medico doc = comboBoxMedicos.getValue();
-            int numeroPuesto = getNumPuesto(numPuesto);
+                Puesto puesto = new Puesto(numeroPuesto, doc);
+                this.puestos.add(puesto);
+                this.tablaPuesto.setItems(puestos);
 
-            Puesto puesto = new Puesto(numeroPuesto, doc);
-            this.puestos.add(puesto);
-            this.tablaPuesto.setItems(puestos);
+                escribir.println(puesto.toString());
+                escribir.flush();
+                escribir.close();
+                bw.close();
 
-            escribir.println(puesto.toString());
-            escribir.flush();
-            escribir.close();
-            bw.close();
-
-            initCombox();
+                initCombox();
+            } else {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setHeaderText(null);
+                alert.setTitle("ERROR");
+                alert.setContentText("NO HA SELECCIONADO A UN MEDICO");
+                alert.showAndWait();
+            }
 
         } catch (IOException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -139,12 +152,34 @@ public class VentanaPuestosController implements Initializable {
     }
 
     private int getNumPuesto(int numPuesto) {
-        ObservableList<Puesto> nums = tablaPuesto.getItems();
-        if (nums.isEmpty()) {
+        LinkedList<Puesto> p = Puesto.getPuestos("puestos.txt");
+        if (p.isEmpty()) {
             numPuesto += 1;
         } else {
-            numPuesto = nums.size() + 1;
+            numPuesto = p.size() + 1;
         }
         return numPuesto;
     }
+
+    @FXML
+    private void eliminarPuesto(ActionEvent event) {
+        Puesto p = this.tablaPuesto.getSelectionModel().getSelectedItem();
+        if (p == null) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setTitle("ERROR");
+            alert.setContentText("DEBE SELECCIONAR UN PUESTO");
+            alert.showAndWait();
+        } else {
+            p.setEstado("Eliminado");
+            this.puestos.remove(p);
+            this.tablaPuesto.refresh();
+        }
+    }
+
+    @FXML
+    private void atenderPuesto(ActionEvent event) {
+
+    }
+
 }
