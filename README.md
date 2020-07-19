@@ -2,8 +2,11 @@
 PROYECTO #1 - PRIMER PARCIAL
 
 Integrantes:
+
 -Briones Chonillo ANA
+
 -Venegas Bodero William
+
 -Intriago Ortiz Sandy
 
 Grupo # 5
@@ -27,12 +30,17 @@ Video001.wav
 Video002.wav
 Video003.wav
 ….
+
 Requerimientos:
+
 •	Diseño (Diagrama de Clases) de las relaciones de los TDAs que participan en la simulación.
 
-   Anexado en el proyecto con el nombre:
+    Anexado en el proyecto con el nombre:
+   
 •	Implementación del sistema de turno en interfaz gráfica.
+
 •	Reporte de evaluación de correcto funcionamiento de las funcionalidades solicitadas.
+
     Anexado en el proyecto con el nombre:
 
  
