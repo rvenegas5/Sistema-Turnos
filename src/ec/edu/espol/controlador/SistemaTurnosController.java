@@ -110,28 +110,18 @@ public class SistemaTurnosController implements Initializable {
             @Override
             public void run() {
                 Iterator it=videos.iterator();
-                while(it.hasNext()) {
+                while(true) {
                     try {
                         
                         mediaPlayer=(MediaPlayer)it.next();
-                       // videosView.setMediaPlayer(mediaPlayer);
+                       videosView.setMediaPlayer(mediaPlayer);
                         mediaPlayer.setAutoPlay(true);
                         
-                        Thread.sleep(48000);
+                        Thread.sleep(15000);
                     } catch (InterruptedException ex) {}
                 }
-                Platform.runLater(()-> {
-                    // actualizando el Label
-                    videosView.setMediaPlayer(mediaPlayer);
-                    
-                    mediaPlayer.setAutoPlay(true);
-                    
-                    
-                    
-                    
-                });
-            }
-        });hilo.start();
+               
+            }});hilo.start();
       
     }
     
@@ -146,9 +136,6 @@ public class SistemaTurnosController implements Initializable {
 
     
   public void clock(){
-      
-      
-
     // timer actualiza cada segundo 
     Thread timer = new Thread(() -> {
         SimpleDateFormat dt = new SimpleDateFormat("hh:mm:ss");
