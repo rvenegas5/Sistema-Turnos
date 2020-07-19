@@ -49,6 +49,34 @@ public class VentanaPrincipalController implements Initializable {
     @FXML
     private void abrirSistemaTurnos(ActionEvent event) {
 
+        
+       
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ec/edu/espol/vista/SistemaTurnos.fxml"));
+            
+            //Referencia al padre
+            Parent root = loader.load();
+            
+            //Escogemos el controlador de la vista
+            SistemaTurnosController controladorSistema = loader.getController();
+            
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+            // Hasta acabar con la tarea de la otra vista no regreso a la vista anterior
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setScene(scene);
+            stage.show();
+        
+            
+            
+        } catch (IOException ex) {
+            Logger.getLogger(VentanaPrincipalController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+       
+            
+        
+        
+        
     }
 
     @FXML
