@@ -5,7 +5,6 @@
  */
 package ec.edu.espol.controlador;
 
-
 import ec.edu.espol.modelo.Medico;
 import ec.edu.espol.modelo.Paciente;
 import ec.edu.espol.modelo.Puesto;
@@ -58,49 +57,60 @@ public class VentanaAtencionPuestosController {
     private Button botonCancelar;
     @FXML
     private Button botonAceptar;
-    
+
     public void initialize(URL url, ResourceBundle rb) {
-        
+
     }
-    
+
     @FXML
     private void aceptarReceta(Event event) {
-        
+
         LinkedList<Turno> turnos = Turno.getTurnos("turnos.txt");
-        Turno t = turnos.get(0);
-        removeLineFromFile(t.toString(), "turnos.txt");
+        Turno t = null;
+        if (!turnos.isEmpty()) {
+            t = turnos.get(0);
+        }
+        removeLine(t.getPaciente().toString() + "|" + t.getPuesto().toString(), "turnos.txt");
         PriorityQueue<Paciente> pacientes = Paciente.getPrioridadAtencion(Paciente.leerPacientes("pacientes.txt"));
-        pacientes.poll();
-        removeLineFromFile(t.getPaciente().toString(), "pacientes.txt");
-        
+        Paciente p = pacientes.poll();
+        removeLine(p.toString(), "pacientes.txt");
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setHeaderText(null);
+        alert.setTitle("ÉXITO");
+        alert.setContentText("REGISTRO EXITOSO");
+        alert.showAndWait();
+
+        Stage stage = (Stage) this.botonCancelar.getScene().getWindow();
+        stage.close();
     }
-    
+
     @FXML
     private void cancelarReceta(Event event) {
         Stage stage = (Stage) this.botonCancelar.getScene().getWindow();
         stage.close();
-    } 
-    
-    public void removeLineFromFile(String lineToRemove, String archivo) {
+    }
+
+    public void removeLine(String file, String lineToRemove) {
 
         try {
 
-            File inFile = new File(archivo);
+            File inFile = new File(file);
 
             if (!inFile.isFile()) {
-                System.out.println("no hay file");
+                System.out.println("Parameter is not an existing file");
                 return;
             }
 
-            //Construct the new file that will later be renamed to the original filename.
+            //Construct the new file that will later be renamed to the original filename. 
             File tempFile = new File(inFile.getAbsolutePath() + ".tmp");
 
-            BufferedReader br = new BufferedReader(new FileReader(archivo));
+            BufferedReader br = new BufferedReader(new FileReader(file));
             PrintWriter pw = new PrintWriter(new FileWriter(tempFile));
 
             String line = null;
 
-            //Read from the original file and write to the new
+            //Read from the original file and write to the new 
             //unless content matches data to be removed.
             while ((line = br.readLine()) != null) {
 
@@ -122,8 +132,8 @@ public class VentanaAtencionPuestosController {
             //Rename the new file to the filename the original file had.
             if (!tempFile.renameTo(inFile)) {
                 System.out.println("Could not rename file");
-
             }
+
         } catch (FileNotFoundException ex) {
             ex.printStackTrace();
         } catch (IOException ex) {

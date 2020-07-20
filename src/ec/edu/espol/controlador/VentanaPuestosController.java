@@ -122,7 +122,7 @@ public class VentanaPuestosController implements Initializable {
             try {
                 Medico doc = comboBoxMedicos.getValue();
                 int numeroPuesto = getNumPuesto(numPuesto);
-                
+
                 Puesto puesto = new Puesto(numeroPuesto, doc);
                 File file = new File("puestos.txt");
                 BufferedWriter bw;
@@ -132,10 +132,16 @@ public class VentanaPuestosController implements Initializable {
                 escribir.flush();
                 escribir.close();
                 bw.close();
-                
+
                 this.puestos.add(puesto);
                 this.tablaPuesto.setItems(puestos);
-                
+
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setHeaderText(null);
+                alert.setTitle("EXITO");
+                alert.setContentText("SE HA AGREGADO UN NUEVO PUESTO");
+                alert.showAndWait();
+
                 initCombox();
             } catch (IOException ex) {
                 Logger.getLogger(VentanaPuestosController.class.getName()).log(Level.SEVERE, null, ex);
@@ -170,6 +176,7 @@ public class VentanaPuestosController implements Initializable {
     @FXML
     private void eliminarPuesto(ActionEvent event) {
         Puesto p = this.tablaPuesto.getSelectionModel().getSelectedItem();
+
         if (p == null) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText(null);
@@ -179,8 +186,14 @@ public class VentanaPuestosController implements Initializable {
         } else {
             this.puestos.remove(p);
             this.tablaPuesto.refresh();
-            removeLineFromFile(p.toString());
+            removeLine("puestos.txt", p.toString());
             initCombox();
+
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setHeaderText(null);
+            alert.setTitle("EXITO");
+            alert.setContentText("SE HA ELIMINADO UN PUESTO");
+            alert.showAndWait();
         }
     }
 
@@ -208,27 +221,26 @@ public class VentanaPuestosController implements Initializable {
         }
     }
 
-
-    public void removeLineFromFile(String lineToRemove) {
+    public void removeLine(String file, String lineToRemove) {
 
         try {
 
-            File inFile = new File("puestos.txt");
+            File inFile = new File(file);
 
             if (!inFile.isFile()) {
-                System.out.println("no hay file");
+                System.out.println("Parameter is not an existing file");
                 return;
             }
 
-            //Construct the new file that will later be renamed to the original filename.
+            //Construct the new file that will later be renamed to the original filename. 
             File tempFile = new File(inFile.getAbsolutePath() + ".tmp");
 
-            BufferedReader br = new BufferedReader(new FileReader("puestos.txt"));
+            BufferedReader br = new BufferedReader(new FileReader(file));
             PrintWriter pw = new PrintWriter(new FileWriter(tempFile));
 
             String line = null;
 
-            //Read from the original file and write to the new
+            //Read from the original file and write to the new 
             //unless content matches data to be removed.
             while ((line = br.readLine()) != null) {
 
@@ -250,8 +262,8 @@ public class VentanaPuestosController implements Initializable {
             //Rename the new file to the filename the original file had.
             if (!tempFile.renameTo(inFile)) {
                 System.out.println("Could not rename file");
-
             }
+
         } catch (FileNotFoundException ex) {
             ex.printStackTrace();
         } catch (IOException ex) {

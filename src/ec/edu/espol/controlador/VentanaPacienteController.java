@@ -10,8 +10,11 @@ import ec.edu.espol.modelo.Paciente;
 import ec.edu.espol.modelo.Puesto;
 import ec.edu.espol.modelo.Sintoma;
 import ec.edu.espol.modelo.Turno;
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -117,10 +120,10 @@ public class VentanaPacienteController implements Initializable {
                 escribir.close();
 
                 bw.close();
-
                 Turno turno = new Turno(paciente, asignarPuesto());
                 guardarTurno(turno);
-                
+                removeLine("paciente.txt", paciente.toString());
+
                 // Muestro mensaje de registro
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setHeaderText(null);
@@ -140,7 +143,7 @@ public class VentanaPacienteController implements Initializable {
                 alert.setTitle("ERROR");
                 alert.setContentText("ERROR DE REGISTRO");
                 alert.showAndWait();
-                
+
             }
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -164,33 +167,102 @@ public class VentanaPacienteController implements Initializable {
         try {
             File file = new File("turnos.txt");
             BufferedWriter bw;
-            bw = new BufferedWriter(new FileWriter("turnos.txt", true));
+            bw = new BufferedWriter(new FileWriter(file, true));
             PrintWriter escribir = new PrintWriter(bw);
-            
+
             Paciente p = turno.getPaciente();
             Puesto puesto = turno.getPuesto();
-            escribir.println(p.toString() + "|" +puesto.toString());
+            escribir.println(p.toString() + "|" + puesto.toString());
 
             escribir.flush();
             escribir.close();
-            
-                bw.close();
-        }catch (IOException ex) {
-                Logger.getLogger(VentanaPacienteController.class.getName()).log(Level.SEVERE, null, ex);
-            }
+
+            bw.close();
+        } catch (IOException ex) {
+            Logger.getLogger(VentanaPacienteController.class.getName()).log(Level.SEVERE, null, ex);
         }
-    
+    }
 
     private Puesto asignarPuesto() {
-        LinkedList<Puesto> puestos = Puesto.getPuestos("puestos.txt");
-        Iterator<Puesto> itP = puestos.iterator();
-        while (itP.hasNext()) {
-            Puesto p = itP.next();
-            if (p.getEstado().equals("Libre")) {
-                return p;
+        try {
+            LinkedList<Puesto> puestos = Puesto.getPuestos("puestos.txt");
+            Iterator<Puesto> itP = puestos.iterator();
+            File file = new File("puestos.txt");
+            BufferedWriter bw;
+            bw = new BufferedWriter(new FileWriter(file, true));
+            PrintWriter escribir = new PrintWriter(bw);
+            while (itP.hasNext()) {
+                Puesto p = itP.next();
+                if (p.getEstado().equals("Libre")) {
+                    removeLine("puestos.txt", p.toString());
+                    p.setEstado("Ocupado");
+
+                    escribir.println(p.toString());
+                    escribir.flush();
+
+                    escribir.close();
+                    bw.close();
+                    return p;
+                }
+
             }
+
+            escribir.close();
+            bw.close();
+
+        } catch (IOException ex) {
+            Logger.getLogger(VentanaPacienteController.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
 
+    public void removeLine(String file, String lineToRemove) {
+
+        try {
+
+            File inFile = new File(file);
+
+            if (!inFile.isFile()) {
+                System.out.println("Parameter is not an existing file");
+                return;
+            }
+
+            //Construct the new file that will later be renamed to the original filename. 
+            File tempFile = new File(inFile.getAbsolutePath() + ".tmp");
+
+            BufferedReader br = new BufferedReader(new FileReader(file));
+            PrintWriter pw = new PrintWriter(new FileWriter(tempFile));
+
+            String line = null;
+
+            //Read from the original file and write to the new 
+            //unless content matches data to be removed.
+            while ((line = br.readLine()) != null) {
+
+                if (!line.trim().equals(lineToRemove)) {
+
+                    pw.println(line);
+                    pw.flush();
+                }
+            }
+            pw.close();
+            br.close();
+
+            //Delete the original file
+            if (!inFile.delete()) {
+                System.out.println("Could not delete file");
+                return;
+            }
+
+            //Rename the new file to the filename the original file had.
+            if (!tempFile.renameTo(inFile)) {
+                System.out.println("Could not rename file");
+            }
+
+        } catch (FileNotFoundException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
 }

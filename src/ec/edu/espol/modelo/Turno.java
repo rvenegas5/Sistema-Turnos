@@ -34,7 +34,7 @@ public class Turno {
         this.puesto = puesto;
         setNumero(numero);
         setLetra(letra);
-        this.turno = letra + numero + "";
+        this.turno = getLetra() + getNumero() + "";
         
     }
 

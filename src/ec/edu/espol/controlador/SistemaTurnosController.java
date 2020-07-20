@@ -64,15 +64,15 @@ public class SistemaTurnosController implements Initializable {
     private TableView turnosTable;
     @FXML
     private Button regresar;
-    
+
     private ObservableList<Turno> turnos;
 
     private volatile boolean enough = false;
-    
+
     MediaPlayer mediaPlayer;
-    
+
     CircularSimplyLinkedList<MediaPlayer> videos;
-    
+
     String archivo = "videos.txt";
 
     @Override
@@ -100,8 +100,8 @@ public class SistemaTurnosController implements Initializable {
             Media media;
 
             while ((linea = br.readLine()) != null) {
-
-                media = new Media(new File(linea).toURI().toURL().toExternalForm());
+                String f = new File(linea).getAbsolutePath();
+                media = new Media(new File(f).toURI().toURL().toExternalForm());
                 mp = new MediaPlayer(media);
                 urlVideos.addFirst(mp);
 
@@ -165,7 +165,6 @@ public class SistemaTurnosController implements Initializable {
 
     }
 
-  
     @FXML
     private void regresarVentana(ActionEvent event) {
         Stage stage = (Stage) this.regresar.getScene().getWindow();
@@ -175,8 +174,7 @@ public class SistemaTurnosController implements Initializable {
         stage.close();
     }
 
-    
-    private void initTurnos(){
+    private void initTurnos() {
         if (!Turno.getTurnos("turnos.txt").isEmpty()) {
             ObservableList<Turno> obsTurno = FXCollections.observableArrayList();
             obsTurno.addAll(Turno.getTurnos("turnos.txt"));
@@ -184,7 +182,7 @@ public class SistemaTurnosController implements Initializable {
             this.turnosTable.setItems(turnos);
         }
         this.turnosTable.setItems(turnos);
-    
+
     }
 
 }
