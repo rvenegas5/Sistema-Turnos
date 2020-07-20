@@ -92,4 +92,16 @@ public class Puesto {
         return listaPuestos;
     }
     
+    
+     public String cambiotoString() {
+         if(numero>1 && numero<10)
+         return "0"+numero;
+         else
+         return ""+numero;
+    }
+    
+    
+    
+    
+    
 }

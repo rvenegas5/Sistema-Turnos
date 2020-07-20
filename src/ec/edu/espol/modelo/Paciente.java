@@ -104,6 +104,9 @@ public class Paciente extends Persona {
         }
         return true;
     }
-    
+     public String cambiotoString() {
+        return "Nombre:" +getNombre() + ", " + "Apellido: "+ getApellido() + ", " +"Edad: "+ getEdad() + ", "
+                +"Genero: "+ getGenero() + ", " + "Síntoma: "+ getSintoma();
+    } 
     
 }

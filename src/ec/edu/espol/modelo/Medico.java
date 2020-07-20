@@ -102,4 +102,12 @@ public class Medico extends Persona {
         return true;
     }
     
+    public String cambiotoString() {
+        return "Nombre:" +getNombre() + ", " + "Apellido: "+ getApellido() + ", " +"Edad: "+ getEdad() + ", "
+                +"Genero: "+ getGenero() + ", " + "Especialidad: "+ getEspecialidad();
+    }
+    
+    
+    
+    
 }

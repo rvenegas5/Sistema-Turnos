@@ -133,4 +133,18 @@ public class Turno {
         }
         return turnos;
     }
+    
+    
+    public String cambiotoString() {
+         if(numero>1 && numero<10)
+         return this.letra+"0"+this.numero;
+         else
+         return this.letra+""+this.numero;
+    }
+    
+    
+    
+    
+    
+    
 }
