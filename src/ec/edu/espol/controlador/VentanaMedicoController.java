@@ -63,7 +63,7 @@ public class VentanaMedicoController implements Initializable {
     @FXML
     private void registrarDoc(ActionEvent event) {
         try {
-            File file = new File("medicos.txt");
+            File file = new File("./medicos.txt");
             BufferedWriter bw;
             bw = new BufferedWriter(new FileWriter(file, true));
             PrintWriter escribir = new PrintWriter(bw);
@@ -85,7 +85,7 @@ public class VentanaMedicoController implements Initializable {
             String especialidad = especialidadMedico.getText();
 
             Medico medico = new Medico(nombreDoc, apellidoDoc, edadDoc, genero, especialidad);
-            escribir.println(medico.toString());
+            escribir.println(medico.cambiotoString());
 
             escribir.flush();
             escribir.close();

@@ -57,7 +57,7 @@ public class Puesto {
 
     @Override
     public String toString() {
-            return  getEstado() + "|" + getNumero() + "|" + getMedico().toString();
+            return  getNumero() + "";
     }
     
     public static LinkedList<Puesto> getPuestos(String archivo) {
@@ -84,7 +84,9 @@ public class Puesto {
                 
                 Medico doctor = new Medico(nombre, apellido, edad, genero, especialidad);
                 Puesto puesto = new Puesto(numPues, doctor);
-                listaPuestos.add(puesto);
+                puesto.setEstado(estado);
+                if (!listaPuestos.contains(puesto))
+                    listaPuestos.add(puesto);
             }
         } catch (IOException ex) {
             Logger.getLogger(Medico.class.getName()).log(Level.SEVERE, null, ex);
@@ -94,10 +96,7 @@ public class Puesto {
     
     
      public String cambiotoString() {
-         if(numero>1 && numero<10)
-         return "0"+numero;
-         else
-         return ""+numero;
+         return  getEstado() + "|" + getNumero() + "|" + getMedico().cambiotoString();
     }
     
     

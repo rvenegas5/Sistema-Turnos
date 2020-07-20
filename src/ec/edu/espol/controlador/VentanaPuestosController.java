@@ -86,7 +86,7 @@ public class VentanaPuestosController implements Initializable {
     public void initCombox() {
         ObservableList<Medico> obsMedicos = FXCollections.observableArrayList();
         ObservableList<Puesto> obsTablaMedicos = tablaPuesto.getItems();
-        obsMedicos.addAll(Medico.getMedicos("medicos.txt"));
+        obsMedicos.addAll(Medico.getMedicos("./medicos.txt"));
 
         if (obsTablaMedicos.isEmpty()) {
             this.comboBoxMedicos.getItems().clear();
@@ -107,7 +107,7 @@ public class VentanaPuestosController implements Initializable {
     public void initPuestos() {
         if (!Puesto.getPuestos("puestos.txt").isEmpty()) {
             ObservableList<Puesto> obsPuesto = FXCollections.observableArrayList();
-            obsPuesto.addAll(Puesto.getPuestos("puestos.txt"));
+            obsPuesto.addAll(Puesto.getPuestos("./puestos.txt"));
             puestos.addAll(obsPuesto);
             this.tablaPuesto.setItems(puestos);
             initCombox();
@@ -124,15 +124,15 @@ public class VentanaPuestosController implements Initializable {
                 int numeroPuesto = getNumPuesto(numPuesto);
 
                 Puesto puesto = new Puesto(numeroPuesto, doc);
-                File file = new File("puestos.txt");
+                File file = new File("./puestos.txt");
                 BufferedWriter bw;
                 bw = new BufferedWriter(new FileWriter(file, true));
                 PrintWriter escribir = new PrintWriter(bw);
-                escribir.println(puesto.toString());
+                escribir.println(puesto.cambiotoString());
                 escribir.flush();
                 escribir.close();
                 bw.close();
-
+                
                 this.puestos.add(puesto);
                 this.tablaPuesto.setItems(puestos);
 
@@ -164,7 +164,7 @@ public class VentanaPuestosController implements Initializable {
     }
 
     private int getNumPuesto(int numPuesto) {
-        LinkedList<Puesto> p = Puesto.getPuestos("puestos.txt");
+        LinkedList<Puesto> p = Puesto.getPuestos("./puestos.txt");
         if (p.isEmpty()) {
             numPuesto += 1;
         } else {
@@ -186,7 +186,7 @@ public class VentanaPuestosController implements Initializable {
         } else {
             this.puestos.remove(p);
             this.tablaPuesto.refresh();
-            removeLine("puestos.txt", p.toString());
+            removeLine("puestos.txt", p.cambiotoString());
             initCombox();
 
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -228,6 +228,7 @@ public class VentanaPuestosController implements Initializable {
             File inFile = new File(file);
 
             if (!inFile.isFile()) {
+                inFile.isFile();
                 System.out.println("Parameter is not an existing file");
                 return;
             }
@@ -255,12 +256,14 @@ public class VentanaPuestosController implements Initializable {
 
             //Delete the original file
             if (!inFile.delete()) {
+                inFile.delete();
                 System.out.println("Could not delete file");
                 return;
             }
 
             //Rename the new file to the filename the original file had.
             if (!tempFile.renameTo(inFile)) {
+                tempFile.renameTo(inFile);
                 System.out.println("Could not rename file");
             }
 

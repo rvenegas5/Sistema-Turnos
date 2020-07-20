@@ -19,12 +19,12 @@ import java.util.logging.Logger;
  *
  * @author Anii BC
  */
-public class Turno {
+public final class Turno {
     
-    private final char[] letras = {'A', 'B', 'C', 'D', 'C'};
+    private final char[] letras = {'A', 'B', 'C', 'D', 'C', 'E'};
     private char letra;
     private int numero;
-    private String turno;
+    private final String turno;
     private Paciente paciente;
     private Puesto puesto;
     
@@ -77,7 +77,7 @@ public class Turno {
     }
     @Override
     public String toString() {
-        return getLetra() + "|" + getNumero() + "|" + getPaciente().toString() + "|" + getPuesto().toString();
+        return getLetra() + "|" + getNumero() + "|" + getPaciente().toString() + "|" + getPuesto().cambiotoString();
     }
     
     private void setNumero (int numero) {
@@ -125,6 +125,7 @@ public class Turno {
                 Medico doctor = new Medico(nombreM, apellidoM, edadM, generoM, especialidad);
                 Paciente paciente = new Paciente(nombreP, apellidoP, edadP, generoP, sint);
                 Puesto puesto = new Puesto(numPues, doctor);
+                puesto.setEstado(stado);
                 Turno t = new Turno(paciente, puesto);
                 turnos.add(t);
             }

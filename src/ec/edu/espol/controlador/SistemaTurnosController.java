@@ -72,7 +72,7 @@ public class SistemaTurnosController implements Initializable {
 
     MediaPlayer mediaPlayer;
 
-    CircularSimplyLinkedList<MediaPlayer> videos;
+    CircularSimplyLinkedList<String> videos;
 
     String archivo = "videos.txt";
 
@@ -97,14 +97,14 @@ public class SistemaTurnosController implements Initializable {
             FileReader fr = new FileReader(file);
             BufferedReader br = new BufferedReader(fr);
             String linea;
-            MediaPlayer mp;
-            Media media;
+            //MediaPlayer mp;
+            //Media media;
 
             while ((linea = br.readLine()) != null) {
                 String f = new File(linea).getAbsolutePath();
-                media = new Media(new File(f).toURI().toURL().toExternalForm());
-                mp = new MediaPlayer(media);
-                urlVideos.addFirst(mp);
+                //media = new Media(new File(f).toURI().toURL().toExternalForm());
+                //mp = new MediaPlayer(media);
+                urlVideos.addFirst(f);
 
             }
         } catch (IOException ex) {
@@ -166,7 +166,7 @@ public class SistemaTurnosController implements Initializable {
     }
 
     private void initTurnos() {
-        if (!Turno.getTurnos("turnos.txt").isEmpty()) {
+        if (!Turno.getTurnos("./turnos.txt").isEmpty()) {
             ObservableList<Turno> obsTurno = FXCollections.observableArrayList();
             obsTurno.addAll(Turno.getTurnos("turnos.txt"));
             turnos.addAll(obsTurno);

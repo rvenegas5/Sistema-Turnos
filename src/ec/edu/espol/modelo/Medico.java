@@ -44,8 +44,7 @@ public class Medico extends Persona {
     
      @Override
     public String toString() {
-        return getNombre() + "|" + getApellido() + "|" + getEdad() + "|"
-                + getGenero() + "|" + getEspecialidad();
+        return getNombre() + " " + getApellido(); 
     }
 
     @Override
@@ -103,8 +102,8 @@ public class Medico extends Persona {
     }
     
     public String cambiotoString() {
-        return "Nombre:" +getNombre() + ", " + "Apellido: "+ getApellido() + ", " +"Edad: "+ getEdad() + ", "
-                +"Genero: "+ getGenero() + ", " + "Especialidad: "+ getEspecialidad();
+        return getNombre() + "|" + getApellido() + "|" + getEdad() + "|"
+                + getGenero() + "|" + getEspecialidad();
     }
     
     

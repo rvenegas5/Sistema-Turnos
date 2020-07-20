@@ -23,6 +23,8 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.PriorityQueue;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -65,24 +67,37 @@ public class VentanaAtencionPuestosController {
     @FXML
     private void aceptarReceta(Event event) {
 
-        LinkedList<Turno> turnos = Turno.getTurnos("turnos.txt");
-        Turno t = null;
-        if (!turnos.isEmpty()) {
-            t = turnos.get(0);
+        try {
+            LinkedList<Turno> turnos = Turno.getTurnos("./turnos.txt");
+            Turno t = turnos.get(0);
+
+            removeLine(t.getPaciente().toString() + "|" + t.getPuesto().cambiotoString(), "./turnos.txt");
+            PriorityQueue<Paciente> pacientes = Paciente.getPrioridadAtencion(Paciente.leerPacientes("./pacientes.txt"));
+            Paciente p = pacientes.poll();
+            removeLine(p.toString(), "./pacientes.txt");
+            removeLine("./puestos.txt", t.getPuesto().cambiotoString());
+
+            Puesto puesto = t.getPuesto();
+            puesto.setEstado("Libre");
+            File file = new File("./puestos.txt");
+            BufferedWriter bw;
+            bw = new BufferedWriter(new FileWriter(file, true));
+            PrintWriter escribir = new PrintWriter(bw);
+            escribir.println(puesto.cambiotoString());
+            escribir.flush();
+            escribir.close();
+            bw.close();
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setHeaderText(null);
+            alert.setTitle("ÉXITO");
+            alert.setContentText("REGISTRO EXITOSO");
+            alert.showAndWait();
+
+            Stage stage = (Stage) this.botonCancelar.getScene().getWindow();
+            stage.close();
+        } catch (IOException ex) {
+            Logger.getLogger(VentanaAtencionPuestosController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        removeLine(t.getPaciente().toString() + "|" + t.getPuesto().toString(), "turnos.txt");
-        PriorityQueue<Paciente> pacientes = Paciente.getPrioridadAtencion(Paciente.leerPacientes("pacientes.txt"));
-        Paciente p = pacientes.poll();
-        removeLine(p.toString(), "pacientes.txt");
-
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setHeaderText(null);
-        alert.setTitle("ÉXITO");
-        alert.setContentText("REGISTRO EXITOSO");
-        alert.showAndWait();
-
-        Stage stage = (Stage) this.botonCancelar.getScene().getWindow();
-        stage.close();
     }
 
     @FXML
@@ -98,40 +113,38 @@ public class VentanaAtencionPuestosController {
             File inFile = new File(file);
 
             if (!inFile.isFile()) {
-                System.out.println("Parameter is not an existing file");
-                return;
+                inFile.isFile();
             }
 
             //Construct the new file that will later be renamed to the original filename. 
             File tempFile = new File(inFile.getAbsolutePath() + ".tmp");
 
-            BufferedReader br = new BufferedReader(new FileReader(file));
-            PrintWriter pw = new PrintWriter(new FileWriter(tempFile));
+            try (BufferedReader br = new BufferedReader(new FileReader(file));
+                    PrintWriter pw = new PrintWriter(new FileWriter(tempFile))) {
 
-            String line = null;
+                String line = null;
 
-            //Read from the original file and write to the new 
-            //unless content matches data to be removed.
-            while ((line = br.readLine()) != null) {
+                //Read from the original file and write to the new
+                //unless content matches data to be removed.
+                while ((line = br.readLine()) != null) {
 
-                if (!line.trim().equals(lineToRemove)) {
+                    if (!line.trim().equals(lineToRemove)) {
 
-                    pw.println(line);
-                    pw.flush();
+                        pw.println(line);
+                        pw.flush();
+                    }
                 }
             }
-            pw.close();
-            br.close();
 
             //Delete the original file
             if (!inFile.delete()) {
                 System.out.println("Could not delete file");
-                return;
+                inFile.delete();
             }
 
             //Rename the new file to the filename the original file had.
             if (!tempFile.renameTo(inFile)) {
-                System.out.println("Could not rename file");
+                tempFile.renameTo(inFile);
             }
 
         } catch (FileNotFoundException ex) {

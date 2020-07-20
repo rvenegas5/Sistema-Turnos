@@ -76,9 +76,9 @@ public class VentanaPacienteController implements Initializable {
     @FXML
     private void registrarPaciente(ActionEvent event) {
 
-        if (!Puesto.getPuestos("puestos.txt").isEmpty()) {
+        if (!Puesto.getPuestos("./puestos.txt").isEmpty()) {
             try {
-                File file = new File("pacientes.txt");
+                File file = new File("./pacientes.txt");
                 BufferedWriter bw;
                 bw = new BufferedWriter(new FileWriter(file, true));
                 PrintWriter escribir = new PrintWriter(bw);
@@ -122,7 +122,7 @@ public class VentanaPacienteController implements Initializable {
                 bw.close();
                 Turno turno = new Turno(paciente, asignarPuesto());
                 guardarTurno(turno);
-                removeLine("paciente.txt", paciente.toString());
+                removeLine("./paciente.txt", paciente.toString());
 
                 // Muestro mensaje de registro
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -165,14 +165,14 @@ public class VentanaPacienteController implements Initializable {
     private void guardarTurno(Turno turno) {
         // return getLetra() + "|" + getNumero() + "|" + getPaciente().toString() + "|" + getPuesto().toString();
         try {
-            File file = new File("turnos.txt");
+            File file = new File("./turnos.txt");
             BufferedWriter bw;
             bw = new BufferedWriter(new FileWriter(file, true));
             PrintWriter escribir = new PrintWriter(bw);
 
             Paciente p = turno.getPaciente();
             Puesto puesto = turno.getPuesto();
-            escribir.println(p.toString() + "|" + puesto.toString());
+            escribir.println(p.toString() + "|" + puesto.cambiotoString());
 
             escribir.flush();
             escribir.close();
@@ -185,19 +185,19 @@ public class VentanaPacienteController implements Initializable {
 
     private Puesto asignarPuesto() {
         try {
-            LinkedList<Puesto> puestos = Puesto.getPuestos("puestos.txt");
+            LinkedList<Puesto> puestos = Puesto.getPuestos("./puestos.txt");
             Iterator<Puesto> itP = puestos.iterator();
-            File file = new File("puestos.txt");
+            File file = new File("./puestos.txt");
             BufferedWriter bw;
             bw = new BufferedWriter(new FileWriter(file, true));
             PrintWriter escribir = new PrintWriter(bw);
             while (itP.hasNext()) {
                 Puesto p = itP.next();
                 if (p.getEstado().equals("Libre")) {
-                    removeLine("puestos.txt", p.toString());
+                    removeLine("puestos.txt", p.cambiotoString());
                     p.setEstado("Ocupado");
 
-                    escribir.println(p.toString());
+                    escribir.println(p.cambiotoString());
                     escribir.flush();
 
                     escribir.close();
@@ -223,7 +223,8 @@ public class VentanaPacienteController implements Initializable {
             File inFile = new File(file);
 
             if (!inFile.isFile()) {
-                System.out.println("Parameter is not an existing file");
+                inFile.isFile();
+                System.out.println("Parameter is not an existing file" + file);
                 return;
             }
 
@@ -250,12 +251,14 @@ public class VentanaPacienteController implements Initializable {
 
             //Delete the original file
             if (!inFile.delete()) {
-                System.out.println("Could not delete file");
+                inFile.delete();
+                System.out.println("Could not delete file " + file);
                 return;
             }
 
             //Rename the new file to the filename the original file had.
             if (!tempFile.renameTo(inFile)) {
+                tempFile.renameTo(inFile);
                 System.out.println("Could not rename file");
             }
 
