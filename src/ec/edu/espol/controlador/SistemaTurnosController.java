@@ -13,6 +13,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -69,9 +70,9 @@ public class SistemaTurnosController implements Initializable {
 
     private volatile boolean enough = false;
     
-    MediaPlayer mediaPlayer;
+   // MediaPlayer mediaPlayer;
     
-    CircularSimplyLinkedList<MediaPlayer> videos;
+    CircularSimplyLinkedList<String> videos;
     
     String archivo = "videos.txt";
 
@@ -87,8 +88,8 @@ public class SistemaTurnosController implements Initializable {
 
     }
 
-    public CircularSimplyLinkedList<MediaPlayer> inicializarVideos(String archivo) {
-        CircularSimplyLinkedList<MediaPlayer> urlVideos = new CircularSimplyLinkedList<>();
+    public CircularSimplyLinkedList<String> inicializarVideos(String archivo) {
+        CircularSimplyLinkedList<String> urlVideos = new CircularSimplyLinkedList<>();
 
         try {
             File file = new File(archivo);
@@ -96,15 +97,15 @@ public class SistemaTurnosController implements Initializable {
             FileReader fr = new FileReader(file);
             BufferedReader br = new BufferedReader(fr);
             String linea;
-            MediaPlayer mp;
-            Media media;
+           // MediaPlayer mp;
+            //Media media;
 
             while((linea = br.readLine()) != null){
               String f= new File(linea).getAbsolutePath();
-                media= new Media(new File(f).toURI().toURL().toExternalForm());
-                mp= new MediaPlayer(media);
-                urlVideos.addFirst(mp);
-               
+              //  media= new Media(new File(f).toURI().toURL().toExternalForm());
+               // mp= new MediaPlayer(media);
+                //urlVideos.addFirst(mp);
+               urlVideos.addFirst(f);
                 
             }
         } catch (IOException ex) {
@@ -113,27 +114,31 @@ public class SistemaTurnosController implements Initializable {
         return urlVideos;
     }
 
-    public void colaVideos(CircularSimplyLinkedList<MediaPlayer> videos) {
+    public void colaVideos(CircularSimplyLinkedList<String> videos) {
 
         Thread hilo = new Thread(new Runnable() {
             @Override
             public void run() {
 
-          
+                
               Iterator it=videos.iterator();
                 while(!enough) {
                     try {
-                                      
-                        mediaPlayer=(MediaPlayer)it.next();
-                        videosView.setMediaPlayer(mediaPlayer);
-                        //mediaPlayer.setAutoPlay(true);
-                        mediaPlayer.play();
                         
-                        System.out.println(mediaPlayer);
+                        Media media= new Media(new File((String)it.next()).toURI().toURL().toExternalForm());
+                         MediaPlayer mp= new MediaPlayer(media);            
+                       // mediaPlayer=(MediaPlayer)it.next();
+                        videosView.setMediaPlayer(mp);
+                        //mediaPlayer.setAutoPlay(true);
+                        mp.play();
+                        
+                        System.out.println(mp);
                         Thread.sleep(15000);
                        
                          
-                    } catch (InterruptedException ex) {}
+                    } catch (InterruptedException ex) {} catch (MalformedURLException ex) {
+                        Logger.getLogger(SistemaTurnosController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                     
 
                 }   
@@ -168,7 +173,7 @@ public class SistemaTurnosController implements Initializable {
     private void regresarVentana(ActionEvent event) {
         Stage stage = (Stage) this.regresar.getScene().getWindow();
         //if(mediaPlayer.isAutoPlay()==true) {
-        mediaPlayer.stop();
+       
 
         stage.close();
     }
