@@ -70,14 +70,30 @@ public class VentanaAtencionPuestosController {
         try {
             LinkedList<Turno> turnos = Turno.getTurnos("./turnos.txt");
             Turno t = turnos.get(0);
-
-            removeLine(t.getPaciente().toString() + "|" + t.getPuesto().cambiotoString(), "./turnos.txt");
+            
+            File f = new File("turnos.txt");
+            File f1 = new File("turnos1.txt");
+            ModificarArchivos.modify(t.getPaciente().toString() + "|" + t.getPuesto().cambiotoString(), "turnos.txt", "turnos1.txt");
+            
+            ModificarArchivos.borrarArchivo("turnos.txt");
+            ModificarArchivos.renombrarArchivo(f1, f);
+            
             PriorityQueue<Paciente> pacientes = Paciente.getPrioridadAtencion(Paciente.leerPacientes("./pacientes.txt"));
             Paciente p = pacientes.poll();
-            removeLine(p.toString(), "./pacientes.txt");
-            removeLine("./puestos.txt", t.getPuesto().cambiotoString());
-
+            
+            File fp = new File("pacientes.txt");
+            File fp1 = new File("pacientes1.txt");
+            ModificarArchivos.modify(p.toString(), "pacientes.txt", "pacientes1.txt");
+            ModificarArchivos.borrarArchivo("pacientes.txt");
+            ModificarArchivos.renombrarArchivo(fp1, fp);
+            
             Puesto puesto = t.getPuesto();
+            File fpu = new File("puestos.txt");
+            File fpu1 = new File("puestos1.txt");
+            ModificarArchivos.modify(puesto.cambiotoString(), "puestos.txt", "puestos1.txt");
+            ModificarArchivos.borrarArchivo("puestos.txt");
+            ModificarArchivos.renombrarArchivo(fpu1, fpu);
+            
             puesto.setEstado("Libre");
             File file = new File("./puestos.txt");
             BufferedWriter bw;
@@ -87,6 +103,7 @@ public class VentanaAtencionPuestosController {
             escribir.flush();
             escribir.close();
             bw.close();
+            
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setHeaderText(null);
             alert.setTitle("ÉXITO");
@@ -102,55 +119,8 @@ public class VentanaAtencionPuestosController {
 
     @FXML
     private void cancelarReceta(Event event) {
+
         Stage stage = (Stage) this.botonCancelar.getScene().getWindow();
         stage.close();
-    }
-
-    public void removeLine(String file, String lineToRemove) {
-
-        try {
-
-            File inFile = new File(file);
-
-            if (!inFile.isFile()) {
-                inFile.isFile();
-            }
-
-            //Construct the new file that will later be renamed to the original filename. 
-            File tempFile = new File(inFile.getAbsolutePath() + ".tmp");
-
-            try (BufferedReader br = new BufferedReader(new FileReader(file));
-                    PrintWriter pw = new PrintWriter(new FileWriter(tempFile))) {
-
-                String line = null;
-
-                //Read from the original file and write to the new
-                //unless content matches data to be removed.
-                while ((line = br.readLine()) != null) {
-
-                    if (!line.trim().equals(lineToRemove)) {
-
-                        pw.println(line);
-                        pw.flush();
-                    }
-                }
-            }
-
-            //Delete the original file
-            if (!inFile.delete()) {
-                System.out.println("Could not delete file");
-                inFile.delete();
-            }
-
-            //Rename the new file to the filename the original file had.
-            if (!tempFile.renameTo(inFile)) {
-                tempFile.renameTo(inFile);
-            }
-
-        } catch (FileNotFoundException ex) {
-            ex.printStackTrace();
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
     }
 }

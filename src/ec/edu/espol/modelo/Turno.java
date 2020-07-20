@@ -71,9 +71,7 @@ public final class Turno {
     }
     
     private void setLetra(char letra){
-        Random aleatorio = new Random(System.currentTimeMillis());
-        int intAletorio = aleatorio.nextInt(6);
-        this.letra = getLetras()[intAletorio];
+        this.letra = 'B';
     }
     @Override
     public String toString() {
