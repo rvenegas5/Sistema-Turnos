@@ -72,7 +72,7 @@ public class SistemaTurnosController implements Initializable {
 
     MediaPlayer mediaPlayer;
 
-    CircularSimplyLinkedList<MediaPlayer> videos;
+    CircularSimplyLinkedList<String> videos;
 
     String archivo = "videos.txt";
 
@@ -104,7 +104,8 @@ public class SistemaTurnosController implements Initializable {
                 String f = new File(linea).getAbsolutePath();
                 media = new Media(new File(f).toURI().toURL().toExternalForm());
                 mp = new MediaPlayer(media);
-                urlVideos.addFirst(mp);
+                //urlVideos.addFirst(mp);
+                urlVideos.addFirst(f);
 
             }
         } catch (IOException ex) {
