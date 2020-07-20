@@ -118,6 +118,7 @@ public class SistemaTurnosController implements Initializable {
         Thread hilo = new Thread(new Runnable() {
             @Override
             public void run() {
+<<<<<<< HEAD
                 Iterator it = videos.iterator();
                 while (it.hasNext()) {
                     try {
@@ -163,8 +164,50 @@ public class SistemaTurnosController implements Initializable {
         });
         timer.start();
 
+=======
+                Iterator it=videos.iterator();
+                while(true) {
+                    try {
+                        
+                        mediaPlayer=(MediaPlayer)it.next();
+                       videosView.setMediaPlayer(mediaPlayer);
+                        mediaPlayer.setAutoPlay(true);
+                        
+                        Thread.sleep(15000);
+                    } catch (InterruptedException ex) {}
+                }
+               
+            }});hilo.start();
+      
+>>>>>>> 29df70e9a414c9d03d1980410e08b75cea896d17
     }
 
+<<<<<<< HEAD
+=======
+    
+  public void clock(){
+    // timer actualiza cada segundo 
+    Thread timer = new Thread(() -> {
+        SimpleDateFormat dt = new SimpleDateFormat("hh:mm:ss");
+        while(!enough) {
+            try {
+                
+                Thread.sleep(1000);
+            } catch (InterruptedException ex) {}
+            final String time = dt.format(new Date());
+            Platform.runLater(()-> {
+                // actualizando el Label
+                horaLabel.setText(time);
+            });
+        }
+    });timer.start();
+    
+  }
+    
+  
+  
+  
+>>>>>>> 29df70e9a414c9d03d1980410e08b75cea896d17
     @FXML
     private void regresarVentana(ActionEvent event) {
         Stage stage = (Stage) this.regresar.getScene().getWindow();
