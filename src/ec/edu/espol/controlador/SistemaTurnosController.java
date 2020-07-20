@@ -99,14 +99,14 @@ public class SistemaTurnosController implements Initializable {
             MediaPlayer mp;
             Media media;
 
-            while ((linea = br.readLine()) != null) {
-
-                media = new Media(new File(linea).toURI().toURL().toExternalForm());
-                mp = new MediaPlayer(media);
+            while((linea = br.readLine()) != null){
+              String f= new File(linea).getAbsolutePath();
+                media= new Media(new File(f).toURI().toURL().toExternalForm());
+                mp= new MediaPlayer(media);
                 urlVideos.addFirst(mp);
-
+               
+                
             }
-
         } catch (IOException ex) {
             Logger.getLogger(Video.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -118,29 +118,27 @@ public class SistemaTurnosController implements Initializable {
         Thread hilo = new Thread(new Runnable() {
             @Override
             public void run() {
-                Iterator it = videos.iterator();
-                while (it.hasNext()) {
+
+          
+              Iterator it=videos.iterator();
+                while(!enough) {
                     try {
-
-                        mediaPlayer = (MediaPlayer) it.next();
+                                      
+                        mediaPlayer=(MediaPlayer)it.next();
                         videosView.setMediaPlayer(mediaPlayer);
-                        mediaPlayer.setAutoPlay(true);
+                        //mediaPlayer.setAutoPlay(true);
+                        mediaPlayer.play();
+                        
+                        System.out.println(mediaPlayer);
+                        Thread.sleep(15000);
+                       
+                         
+                    } catch (InterruptedException ex) {}
+                    
 
-                        Thread.sleep(48000);
-                    } catch (InterruptedException ex) {
-                    }
-                }
-                Platform.runLater(() -> {
-                    // actualizando el Label
-                    videosView.setMediaPlayer(mediaPlayer);
-
-                    mediaPlayer.setAutoPlay(true);
-
-                });
+                }   
             }
-        });
-        hilo.start();
-
+        });hilo.start();
     }
 
     public void clock() {
