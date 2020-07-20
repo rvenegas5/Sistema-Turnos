@@ -35,13 +35,13 @@ Requerimientos:
 
 •	Diseño (Diagrama de Clases) de las relaciones de los TDAs que participan en la simulación.
 
-    Anexado en el proyecto
+    Anexado en el proyecto: DIAGRAMA.png
    
 •	Implementación del sistema de turno en interfaz gráfica.
 
 •	Reporte de evaluación de correcto funcionamiento de las funcionalidades solicitadas.
 
-    Anexado en el proyecto 
+    Anexado en el proyecto: Reporte.docx 
  •	Es necesario integrar este codigo al VM de properties en su Proyecto 
  
 ´´´
