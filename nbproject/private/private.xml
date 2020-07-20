@@ -4,10 +4,12 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/WILLIAM/Documents/NetBeansProjects/Sistema-Turnos/src/ec/edu/espol/modelo/Medicamento.java</file>
+            <file>file:/C:/Users/WILLIAM/Documents/NetBeansProjects/Sistema-Turnos/src/ec/edu/espol/controlador/VentanaPrincipalController.java</file>
             <file>file:/C:/Users/WILLIAM/Documents/NetBeansProjects/Sistema-Turnos/src/ec/edu/espol/controlador/VentanaPacienteController.java</file>
             <file>file:/C:/Users/WILLIAM/Documents/NetBeansProjects/Sistema-Turnos/src/ec/edu/espol/controlador/VentanaPuestosController.java</file>
             <file>file:/C:/Users/WILLIAM/Documents/NetBeansProjects/Sistema-Turnos/src/ec/edu/espol/modelo/Persona.java</file>
             <file>file:/C:/Users/WILLIAM/Documents/NetBeansProjects/Sistema-Turnos/src/ec/edu/espol/controlador/SistemaTurnosController.java</file>
+            <file>file:/C:/Users/WILLIAM/Documents/NetBeansProjects/Sistema-Turnos/src/ec/edu/espol/modelo/Medico.java</file>
             <file>file:/C:/Users/WILLIAM/Documents/NetBeansProjects/Sistema-Turnos/src/ec/edu/espol/modelo/Formulario.java</file>
             <file>file:/C:/Users/WILLIAM/Documents/NetBeansProjects/Sistema-Turnos/src/ec/edu/espol/vista/VentanaPuestos.fxml</file>
             <file>file:/C:/Users/WILLIAM/Documents/NetBeansProjects/Sistema-Turnos/src/ec/edu/espol/modelo/Turno.java</file>
@@ -15,6 +17,7 @@
             <file>file:/C:/Users/WILLIAM/Documents/NetBeansProjects/Sistema-Turnos/src/ec/edu/espol/controlador/VentanaAtencionPuestosController.java</file>
             <file>file:/C:/Users/WILLIAM/Documents/NetBeansProjects/Sistema-Turnos/src/ec/edu/espol/vista/VentanaaAtencionPuestos.fxml</file>
             <file>file:/C:/Users/WILLIAM/Documents/NetBeansProjects/Sistema-Turnos/src/ec/edu/espol/controlador/VentanaMedicoController.java</file>
+            <file>file:/C:/Users/WILLIAM/Documents/NetBeansProjects/Sistema-Turnos/src/ec/edu/espol/modelo/Paciente.java</file>
             <file>file:/C:/Users/WILLIAM/Documents/NetBeansProjects/Sistema-Turnos/src/ec/edu/espol/modelo/Receta.java</file>
         </group>
     </open-files>
