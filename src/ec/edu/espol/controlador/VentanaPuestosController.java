@@ -8,6 +8,7 @@ package ec.edu.espol.controlador;
 import ec.edu.espol.modelo.Medico;
 import ec.edu.espol.modelo.Paciente;
 import ec.edu.espol.modelo.Puesto;
+import ec.edu.espol.modelo.Turno;
 import java.awt.event.MouseEvent;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -20,6 +21,7 @@ import java.io.PrintWriter;
 import java.net.URL;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.PriorityQueue;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -124,6 +126,15 @@ public class VentanaPuestosController implements Initializable {
                 int numeroPuesto = getNumPuesto(numPuesto);
 
                 Puesto puesto = new Puesto(numeroPuesto, doc);
+                puesto.setEstado("Ocupado");
+
+                PriorityQueue<Paciente> pacientes = Paciente.getPrioridadAtencion(Paciente.leerPacientes("pacientes.txt"));
+                if (pacientes.poll() != null) {
+                    puesto.setEstado("Ocupado");
+                    Turno turno = new Turno(pacientes.poll(), puesto);
+                    guardarTurno(turno);
+                }
+
                 File file = new File("./puestos.txt");
                 BufferedWriter bw;
                 bw = new BufferedWriter(new FileWriter(file, true));
@@ -176,6 +187,8 @@ public class VentanaPuestosController implements Initializable {
     @FXML
     private void eliminarPuesto(ActionEvent event) {
         Puesto p = this.tablaPuesto.getSelectionModel().getSelectedItem();
+        File f = new File("puestos.txt");
+        File f1 = new File("puestos1.txt");
 
         if (p == null) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -187,8 +200,6 @@ public class VentanaPuestosController implements Initializable {
             this.puestos.remove(p);
             this.tablaPuesto.refresh();
 
-            File f = new File("puestos.txt");
-            File f1 = new File("puestos1.txt");
             ModificarArchivos.modify(p.cambiotoString(), "puestos.txt", "puestos1.txt");
             ModificarArchivos.borrarArchivo("puestos.txt");
             ModificarArchivos.renombrarArchivo(f1, f);
@@ -204,26 +215,56 @@ public class VentanaPuestosController implements Initializable {
 
     @FXML
     private void atenderPuesto(ActionEvent event) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ec/edu/espol/vista/VentanaaAtencionPuestos.fxml"));
+        if (!Puesto.getPuestos("puestos.txt").isEmpty()) {
+            try {
 
-            // Referencia al padre
-            Parent root = loader.load();
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/ec/edu/espol/vista/VentanaaAtencionPuestos.fxml"));
 
-            // Escogemos el controlador de la vista
-            VentanaAtencionPuestosController controladorPuesto = loader.getController();
+                // Referencia al padre
+                Parent root = loader.load();
 
-            Scene scene = new Scene(root);
-            Stage stage = new Stage();
-            // Hasta acabar con la tarea de la otra vista no regreso a la vista anterior
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setScene(scene);
-            stage.showAndWait();
+                // Escogemos el controlador de la vista
+                VentanaAtencionPuestosController controladorPuesto = loader.getController();
 
-        } catch (IOException ex) {
-            Logger.getLogger(VentanaPuestosController.class.getName()).log(Level.SEVERE, null, ex);
+                Scene scene = new Scene(root);
+                Stage stage = new Stage();
+                // Hasta acabar con la tarea de la otra vista no regreso a la vista anterior
+                stage.initModality(Modality.APPLICATION_MODAL);
+                stage.setScene(scene);
+                stage.showAndWait();
+
+            } catch (IOException ex) {
+                Logger.getLogger(VentanaPuestosController.class.getName()).log(Level.SEVERE, null, ex);
+
+            }
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setTitle("ERROR");
+            alert.setContentText("ERROR DE SELECCION");
+            alert.showAndWait();
 
         }
     }
 
+    public static void guardarTurno(Turno turno) {
+        // return getLetra() + "|" + getNumero() + "|" + getPaciente().toString() + "|" + getPuesto().toString();
+        try {
+            File file = new File("turnos.txt");
+            BufferedWriter bw;
+            bw = new BufferedWriter(new FileWriter(file, true));
+            PrintWriter escribir = new PrintWriter(bw);
+
+            Paciente p = turno.getPaciente();
+            Puesto puesto = turno.getPuesto();
+            escribir.println(p.toString() + "|" + puesto.cambiotoString());
+
+            escribir.flush();
+            escribir.close();
+
+            bw.close();
+        } catch (IOException ex) {
+            Logger.getLogger(VentanaPacienteController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }

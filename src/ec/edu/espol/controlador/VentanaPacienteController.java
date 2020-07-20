@@ -76,7 +76,6 @@ public class VentanaPacienteController implements Initializable {
     @FXML
     private void registrarPaciente(ActionEvent event) {
 
-        if (!Puesto.getPuestos("./puestos.txt").isEmpty()) {
             try {
                 File file = new File("./pacientes.txt");
                 BufferedWriter bw;
@@ -120,8 +119,6 @@ public class VentanaPacienteController implements Initializable {
                 escribir.close();
 
                 bw.close();
-                Turno turno = new Turno(paciente, asignarPuesto());
-                guardarTurno(turno);
 
                 // Muestro mensaje de registro
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -144,14 +141,6 @@ public class VentanaPacienteController implements Initializable {
                 alert.showAndWait();
 
             }
-        } else {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setHeaderText(null);
-            alert.setTitle("ERROR");
-            alert.setContentText("NO EXISTEN PUESTOS DE ATENCIÓN");
-            alert.showAndWait();
-
-        }
 
     }
 
@@ -159,64 +148,6 @@ public class VentanaPacienteController implements Initializable {
     private void cancelarRegistroPac(ActionEvent event) {
         Stage stage = (Stage) this.botonCancelarRegPac.getScene().getWindow();
         stage.close();
-    }
-
-    private void guardarTurno(Turno turno) {
-        // return getLetra() + "|" + getNumero() + "|" + getPaciente().toString() + "|" + getPuesto().toString();
-        try {
-            File file = new File("./turnos.txt");
-            BufferedWriter bw;
-            bw = new BufferedWriter(new FileWriter(file, true));
-            PrintWriter escribir = new PrintWriter(bw);
-
-            Paciente p = turno.getPaciente();
-            Puesto puesto = turno.getPuesto();
-            escribir.println(p.toString() + "|" + puesto.cambiotoString());
-
-            escribir.flush();
-            escribir.close();
-
-            bw.close();
-        } catch (IOException ex) {
-            Logger.getLogger(VentanaPacienteController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    private Puesto asignarPuesto() {
-        try {
-            LinkedList<Puesto> puestos = Puesto.getPuestos("puestos.txt");
-            Iterator<Puesto> itP = puestos.iterator();
-            File file = new File("puestos.txt");
-            File f1 = new File("puestos1.txt");
-            BufferedWriter bw;
-            bw = new BufferedWriter(new FileWriter(file, true));
-            PrintWriter escribir = new PrintWriter(bw);
-            while (itP.hasNext()) {
-                Puesto p = itP.next();
-                if (p.getEstado().equals("Libre")) {
-
-                    ModificarArchivos.modify(p.cambiotoString(), "puestos.txt", "puestos1.txt");
-                    ModificarArchivos.borrarArchivo("puestos.txt");
-                    ModificarArchivos.renombrarArchivo(f1, file);
-                    p.setEstado("Ocupado");
-
-                    escribir.println(p.cambiotoString());
-                    escribir.flush();
-
-                    escribir.close();
-                    bw.close();
-                    return p;
-                }
-
-            }
-
-            escribir.close();
-            bw.close();
-
-        } catch (IOException ex) {
-            Logger.getLogger(VentanaPacienteController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return null;
     }
 
 }
