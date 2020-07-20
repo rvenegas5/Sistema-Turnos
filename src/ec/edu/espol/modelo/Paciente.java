@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.LinkedList;
+import java.util.Objects;
 import java.util.PriorityQueue;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -79,4 +80,30 @@ public class Paciente extends Persona {
         prioridadAtencion.addAll(pacientes);
         return prioridadAtencion;
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Paciente other = (Paciente) obj;
+        if (!Objects.equals(this.sintoma, other.sintoma)) {
+            return false;
+        }
+        return true;
+    }
+    
+    
 }

@@ -15,11 +15,56 @@ import java.util.LinkedList;
 public class Receta {
     private Medico medico;
     private Paciente paciente;
-    LinkedList<String> medicamentos;
-    Date fecha;
-    String diagnostico; 
-    
-    
-    
+    private LinkedList<String> medicamentos;
+    private Date fecha;
+    private String diagnostico; 
+
+    public Receta(Medico medico, Paciente paciente, LinkedList<String> medicamentos, Date fecha, String diagnostico) {
+        this.medico = medico;
+        this.paciente = paciente;
+        this.medicamentos = medicamentos;
+        this.fecha = fecha;
+        this.diagnostico = diagnostico;
+    }
+
+    public Medico getMedico() {
+        return medico;
+    }
+
+    public void setMedico(Medico medico) {
+        this.medico = medico;
+    }
+
+    public Paciente getPaciente() {
+        return paciente;
+    }
+
+    public void setPaciente(Paciente paciente) {
+        this.paciente = paciente;
+    }
+
+    public LinkedList<String> getMedicamentos() {
+        return medicamentos;
+    }
+
+    public void setMedicamentos(LinkedList<String> medicamentos) {
+        this.medicamentos = medicamentos;
+    }
+
+    public Date getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
+    }
+
+    public String getDiagnostico() {
+        return diagnostico;
+    }
+
+    public void setDiagnostico(String diagnostico) {
+        this.diagnostico = diagnostico;
+    }
     
 }

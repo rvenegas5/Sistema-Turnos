@@ -6,10 +6,14 @@
 package ec.edu.espol.controlador;
 
 import ec.edu.espol.modelo.Medico;
+import ec.edu.espol.modelo.Paciente;
 import ec.edu.espol.modelo.Puesto;
 import java.awt.event.MouseEvent;
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -17,17 +21,23 @@ import java.net.URL;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 /**
@@ -107,39 +117,35 @@ public class VentanaPuestosController implements Initializable {
     @FXML
     private void añadirPuesto(ActionEvent event) {
 
-        try {
-            if (!this.comboBoxMedicos.getItems().isEmpty()) {
+        if (!this.comboBoxMedicos.getItems().isEmpty()) {
+
+            try {
+                Medico doc = comboBoxMedicos.getValue();
+                int numeroPuesto = getNumPuesto(numPuesto);
+                
+                Puesto puesto = new Puesto(numeroPuesto, doc);
                 File file = new File("puestos.txt");
                 BufferedWriter bw;
                 bw = new BufferedWriter(new FileWriter(file, true));
                 PrintWriter escribir = new PrintWriter(bw);
-
-                Medico doc = comboBoxMedicos.getValue();
-                int numeroPuesto = getNumPuesto(numPuesto);
-
-                Puesto puesto = new Puesto(numeroPuesto, doc);
-                this.puestos.add(puesto);
-                this.tablaPuesto.setItems(puestos);
-
                 escribir.println(puesto.toString());
                 escribir.flush();
                 escribir.close();
                 bw.close();
-
+                
+                this.puestos.add(puesto);
+                this.tablaPuesto.setItems(puestos);
+                
                 initCombox();
-            } else {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setHeaderText(null);
-                alert.setTitle("ERROR");
-                alert.setContentText("NO HA SELECCIONADO A UN MEDICO");
-                alert.showAndWait();
+            } catch (IOException ex) {
+                Logger.getLogger(VentanaPuestosController.class.getName()).log(Level.SEVERE, null, ex);
             }
 
-        } catch (IOException e) {
+        } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText(null);
             alert.setTitle("ERROR");
-            alert.setContentText("ERROR DE REGISTRO");
+            alert.setContentText("NO HA SELECCIONADO A UN MEDICO");
             alert.showAndWait();
         }
 
@@ -171,15 +177,86 @@ public class VentanaPuestosController implements Initializable {
             alert.setContentText("DEBE SELECCIONAR UN PUESTO");
             alert.showAndWait();
         } else {
-            p.setEstado("Eliminado");
             this.puestos.remove(p);
             this.tablaPuesto.refresh();
+            removeLineFromFile(p.toString());
+            initCombox();
         }
     }
 
     @FXML
     private void atenderPuesto(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ec/edu/espol/vista/VentanaaAtencionPuestos.fxml"));
 
+            // Referencia al padre
+            Parent root = loader.load();
+
+            // Escogemos el controlador de la vista
+            VentanaAtencionPuestosController controladorPuesto = loader.getController();
+
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+            // Hasta acabar con la tarea de la otra vista no regreso a la vista anterior
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setScene(scene);
+            stage.showAndWait();
+
+        } catch (IOException ex) {
+            Logger.getLogger(VentanaPuestosController.class.getName()).log(Level.SEVERE, null, ex);
+
+        }
+    }
+
+
+    public void removeLineFromFile(String lineToRemove) {
+
+        try {
+
+            File inFile = new File("puestos.txt");
+
+            if (!inFile.isFile()) {
+                System.out.println("no hay file");
+                return;
+            }
+
+            //Construct the new file that will later be renamed to the original filename.
+            File tempFile = new File(inFile.getAbsolutePath() + ".tmp");
+
+            BufferedReader br = new BufferedReader(new FileReader("puestos.txt"));
+            PrintWriter pw = new PrintWriter(new FileWriter(tempFile));
+
+            String line = null;
+
+            //Read from the original file and write to the new
+            //unless content matches data to be removed.
+            while ((line = br.readLine()) != null) {
+
+                if (!line.trim().equals(lineToRemove)) {
+
+                    pw.println(line);
+                    pw.flush();
+                }
+            }
+            pw.close();
+            br.close();
+
+            //Delete the original file
+            if (!inFile.delete()) {
+                System.out.println("Could not delete file");
+                return;
+            }
+
+            //Rename the new file to the filename the original file had.
+            if (!tempFile.renameTo(inFile)) {
+                System.out.println("Could not rename file");
+
+            }
+        } catch (FileNotFoundException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
 
 }

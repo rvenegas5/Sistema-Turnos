@@ -81,6 +81,7 @@ public class Puesto {
                 char genero = l[5].charAt(0) ;
                 String especialidad = l[6];
                 
+                
                 Medico doctor = new Medico(nombre, apellido, edad, genero, especialidad);
                 Puesto puesto = new Puesto(numPues, doctor);
                 listaPuestos.add(puesto);

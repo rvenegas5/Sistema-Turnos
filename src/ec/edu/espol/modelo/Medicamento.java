@@ -10,7 +10,8 @@ package ec.edu.espol.modelo;
  * @author Anii BC
  */
 public class Medicamento {
-     private String nombre;
+
+    private String nombre;
     private String dosis;
     private int dias;
 
@@ -43,8 +44,5 @@ public class Medicamento {
     public void setDias(int dias) {
         this.dias = dias;
     }
-    
-    
-    
-    
+
 }
