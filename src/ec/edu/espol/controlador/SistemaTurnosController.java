@@ -70,7 +70,7 @@ public class SistemaTurnosController implements Initializable {
 
     private volatile boolean enough = false;
     
-   // MediaPlayer mediaPlayer;
+
     
     CircularSimplyLinkedList<String> videos;
     
@@ -97,16 +97,9 @@ public class SistemaTurnosController implements Initializable {
             FileReader fr = new FileReader(file);
             BufferedReader br = new BufferedReader(fr);
             String linea;
-           // MediaPlayer mp;
-            //Media media;
-
             while((linea = br.readLine()) != null){
               String f= new File(linea).getAbsolutePath();
-              //  media= new Media(new File(f).toURI().toURL().toExternalForm());
-               // mp= new MediaPlayer(media);
-                //urlVideos.addFirst(mp);
                urlVideos.addFirst(f);
-                
             }
         } catch (IOException ex) {
             Logger.getLogger(Video.class.getName()).log(Level.SEVERE, null, ex);
@@ -119,28 +112,19 @@ public class SistemaTurnosController implements Initializable {
         Thread hilo = new Thread(new Runnable() {
             @Override
             public void run() {
-
-                
-              Iterator it=videos.iterator();
+                Iterator it=videos.iterator();
                 while(!enough) {
                     try {
                         
                         Media media= new Media(new File((String)it.next()).toURI().toURL().toExternalForm());
-                         MediaPlayer mp= new MediaPlayer(media);            
-                       // mediaPlayer=(MediaPlayer)it.next();
+                         MediaPlayer mp= new MediaPlayer(media);     
                         videosView.setMediaPlayer(mp);
-                        //mediaPlayer.setAutoPlay(true);
                         mp.play();
-                        
-                        System.out.println(mp);
                         Thread.sleep(15000);
-                       
-                         
+                                               
                     } catch (InterruptedException ex) {} catch (MalformedURLException ex) {
                         Logger.getLogger(SistemaTurnosController.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                    
-
                 }   
             }
         });hilo.start();
@@ -172,9 +156,7 @@ public class SistemaTurnosController implements Initializable {
     @FXML
     private void regresarVentana(ActionEvent event) {
         Stage stage = (Stage) this.regresar.getScene().getWindow();
-        //if(mediaPlayer.isAutoPlay()==true) {
        
-
         stage.close();
     }
 
